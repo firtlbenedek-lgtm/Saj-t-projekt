@@ -7,7 +7,7 @@ Modify these settings to customize the bot's behavior.
 EXCHANGE = "binance"          # Supported: binance, bybit, kraken, coinbase
 API_KEY = ""                  # Set via .env or environment variable
 API_SECRET = ""               # Set via .env or environment variable
-TESTNET = True                # ALWAYS start on testnet! Switch to False only when ready.
+TESTNET = False               # Paper trading uses live public data; testnet only needed for real order testing.
 
 # ─── Trading Universe ─────────────────────────────────────────────────────────
 SYMBOLS = [

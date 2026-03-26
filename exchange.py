@@ -28,23 +28,13 @@ API_SECRET = os.getenv("TRADING_BOT_API_SECRET", config.API_SECRET)
 def _build_exchange() -> ccxt.Exchange:
     exchange_class = getattr(ccxt, config.EXCHANGE)
     params = {
-        "apiKey": API_KEY,
-        "secret": API_SECRET,
+        "apiKey": API_KEY or None,
+        "secret": API_SECRET or None,
         "enableRateLimit": True,
         "options": {"defaultType": "spot"},
     }
-    if config.TESTNET:
-        params["options"]["defaultType"] = "future"
-        # Binance testnet URLs
-        if config.EXCHANGE == "binance":
-            params["urls"] = {
-                "api": {
-                    "public": "https://testnet.binancefuture.com/fapi/v1",
-                    "private": "https://testnet.binancefuture.com/fapi/v1",
-                }
-            }
     exchange = exchange_class(params)
-    if config.TESTNET and hasattr(exchange, "set_sandbox_mode"):
+    if config.TESTNET and API_KEY and API_SECRET and hasattr(exchange, "set_sandbox_mode"):
         exchange.set_sandbox_mode(True)
     return exchange
 
